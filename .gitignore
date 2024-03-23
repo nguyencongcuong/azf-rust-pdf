@@ -1,0 +1,16 @@
+/.vscode
+/.idea
+
+# Azure Functions artifacts
+bin
+obj
+appsettings.json
+
+# Azurite artifacts
+__blobstorage__
+__queuestorage__
+__azurite_db*__.json
+
+# Added by cargo
+
+/target
