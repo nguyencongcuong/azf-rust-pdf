@@ -1,19 +1,33 @@
 use std::env;
 
 use actix_web::{App, get, HttpRequest, HttpResponse, HttpServer, middleware::Logger, web};
+use printpdf::Error;
 
-use handler::{calculate_time, generate_pdf, PdfOptions};
+use handler::{Options, print_template_1};
+
+use crate::util::calculate_time;
+
+mod util;
 
 #[get("/api/pdf")]
-pub async fn create_pdf(_req: HttpRequest, options: web::Json<PdfOptions>) -> HttpResponse {
+pub async fn create_pdf(_req: HttpRequest, options: web::Json<Options>) -> HttpResponse {
     let pdf_options = options.into_inner();
-    let pdf_file = calculate_time("PDF Generation", || generate_pdf(&pdf_options));
+    let mut pdf_file: Result<Vec<u8>, Error> = Ok(Vec::new());
+    let Options { title, template, .. } = &pdf_options;
+
+    match template.as_str() {
+        "1" => pdf_file = calculate_time("PDF Generation", || print_template_1(&pdf_options)),
+        _ => {
+            return HttpResponse::BadRequest()
+                .body(format!("Template {} is not supported at this moment.", template));
+        }
+    }
 
     match pdf_file {
         Ok(buffer) => {
             HttpResponse::Ok()
-                .append_header(("Content-Type", "application/pdf"))
-                .append_header(("Content-Disposition", format!("attachment; filename=\"{}\"", &pdf_options.title)))
+                .content_type("application/pdf")
+                .append_header(("Content-Disposition", format!("attachment; filename=\"{}\"", &title)))
                 .body(buffer)
         }
         Err(err) => {
