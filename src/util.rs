@@ -3,9 +3,6 @@ use std::io::Read;
 use std::time::Instant;
 
 use image::GenericImageView;
-use zune_core::options::DecoderOptions;
-use zune_png::{PngDecoder, PngEncoder};
-use zune_png::error::PngDecodeErrors;
 
 pub fn calculate_time<F, R>(operation_name: &str, function: F) -> R where F: FnOnce() -> R {
     let start = Instant::now();
@@ -24,23 +21,6 @@ fn file_to_bytes(mut file: File) -> Vec<u8> {
     file.read_to_end(&mut buffer).expect("TODO: panic message");
     buffer
 }
-
-pub fn decode_png(path: &str) -> Result<Vec<u8>, PngDecodeErrors> {
-    let mut file = File::open(path).unwrap();
-    let buffer = file_to_bytes(file);
-    let options = DecoderOptions::default().png_set_strip_to_8bit(true);
-    let mut decoder = PngDecoder::new(buffer);
-    let pixels = decoder.decode_raw();
-    pixels
-}
-
-pub fn encode_png(raw_pixel: Vec<u8>) -> Vec<u8> {
-    let mut encoder = PngEncoder::new(raw_pixel.as_slice(), Default::default());
-    let pixels = encoder.encode();
-
-    pixels
-}
-
 
 pub fn open_and_save(path: &str) {
     // Use the open function to load an image from a Path.

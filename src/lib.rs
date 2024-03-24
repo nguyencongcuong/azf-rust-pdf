@@ -1,6 +1,5 @@
 use std::io::{Cursor, Read};
 
-use jpeg_decoder;
 use printpdf::{BuiltinFont, Color, Image, ImageTransform, IndirectFontRef, Mm, PdfDocument, PdfDocumentReference, Rect, Rgb, TextRenderingMode};
 use serde::Deserialize;
 

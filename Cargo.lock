@@ -876,12 +876,9 @@ dependencies = [
  "actix-web",
  "env_logger",
  "image 0.25.0",
- "jpeg-decoder",
  "printpdf",
  "rusttype",
  "serde",
- "zune-core",
- "zune-png",
 ]
 
 [[package]]
@@ -1055,9 +1052,6 @@ name = "jpeg-decoder"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f5d4a7da358eff58addd2877a45865158f0d78c911d43a5784ceb7bbf52833b0"
-dependencies = [
- "rayon",
-]
 
 [[package]]
 name = "js-sys"
@@ -2444,14 +2438,4 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ec866b44a2a1fd6133d363f073ca1b179f438f99e7e5bfb1e33f7181facfe448"
 dependencies = [
  "zune-core",
-]
-
-[[package]]
-name = "zune-png"
-version = "0.4.10"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7d29c085769c6f29effea890f093120ac019375fdc789d2a496ba8ba96c77509"
-dependencies = [
- "zune-core",
- "zune-inflate",
 ]
