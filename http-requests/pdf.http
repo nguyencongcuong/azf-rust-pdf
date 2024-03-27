@@ -1,0 +1,9 @@
+GET {{base_url}}/pdf
+Content-Type: application/json
+
+{
+  "title": "custom_manifest.pdf",
+  "template": "1"
+}
+
+###
